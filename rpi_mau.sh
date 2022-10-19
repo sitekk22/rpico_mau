@@ -10,7 +10,7 @@ if [[ "$1" == "-h" || "$1" == "--help" ||  -z "$1" ]]; then
 	help_triggered=true
 	echo "  First arugment- build directory path"
 	echo "  Second argument- project name"
-	echo "  Third argument- Raspberry Pi path"
+	echo "  Third argument- Raspberry Pi Pico path"
 	quit
 fi
 
