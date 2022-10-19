@@ -5,6 +5,7 @@ quit(){
 	kill $$
 	exit
 }
+trap quit SIGINT
 
 if [[ "$1" == "-h" || "$1" == "--help" ||  -z "$1" ]]; then
 	help_triggered=true
@@ -32,11 +33,16 @@ if [ -z $3 ] && [ "$help_triggered" != true ]; then
 	quit
 fi
 
-make -C "$1" 1>/dev/null
+make -s -C "$1" 2>/tmp/make.log
+cat /tmp/make.log
 
-clear
+if ! [ -f "$1$2.uf2" ]; then
+	echo "Errors occured"
+	quit
+fi 
 
 upload_file(){
+	
 	if ! [[ -a "$1$2.uf2" ]]; then
 		echo "$2 is not valid project name, make sure it's name without .uf2"
 		quit
@@ -51,16 +57,14 @@ upload_file(){
 }
 
 
-trap quit SIGINT
-
+echo -e "\nEnter bootloader on RPI\nPress CTRL+C to exit"
 until upload_file "$1" "$2" "$3"
-do
-    clear
+do    
     upload_file "$1" "$2" "$3"
-    echo -e "Enter bootloader on RPI\nPress CTRL+C to exit"
     
     sleep 0.1
 done
+rm $1$2.*
 echo "DONE"
 quit
 
