@@ -1,5 +1,5 @@
 # Raspberry Pi Pico Make and Upload
-### rpico_mau.sh - Raspberry Pi Pico Make and Upload.
+### rpico_mau - Raspberry Pi Pico Make and Upload.
 #### Uploads **only uf2** file.
 # Usage:
   - First argument - CMake output directory ex. /home/foo/blink/build
